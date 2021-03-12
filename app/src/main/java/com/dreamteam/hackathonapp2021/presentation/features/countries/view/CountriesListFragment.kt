@@ -2,12 +2,13 @@ package com.dreamteam.hackathonapp2021.presentation.features.countries.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
@@ -39,12 +40,19 @@ class CountriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadData()
+        view.findViewById<RecyclerView>(R.id.recycler_countries).apply {
+            this.layoutManager = GridLayoutManager(this.context, 2)
+            val adapter = CountriesListAdapter { movieData ->
+                listener?.onCountrySelected(movieData)
+            }
+            this.adapter = adapter
+            loadDataToAdapter(adapter)
+        }
     }
 
-    private fun loadData() {
+    private fun loadDataToAdapter(adapter: CountriesListAdapter) {
         viewModel.countriesOutput.observe(viewLifecycleOwner, { countriesList ->
-            Log.d("TAG", countriesList[0].toString())
+            adapter.submitList(countriesList)
         })
     }
 
@@ -54,7 +62,7 @@ class CountriesListFragment : Fragment() {
     }
 
     interface CountriesListItemClickListener {
-        fun onCountrySelected(countryId: Int)
+        fun onCountrySelected(countryId: Long)
     }
 
     companion object {

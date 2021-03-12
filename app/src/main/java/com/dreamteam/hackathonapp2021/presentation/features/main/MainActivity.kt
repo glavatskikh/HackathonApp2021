@@ -6,15 +6,15 @@ import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.data.remote.retrofit.RetrofitDataSource
 import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
 import com.dreamteam.hackathonapp2021.di.NetworkModule
-import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
 import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment
+import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
 import com.dreamteam.hackathonapp2021.repository.CountryRepository
 import com.dreamteam.hackathonapp2021.repository.CountryRepositoryImpl
 
 class MainActivity : AppCompatActivity(),
-                     CountriesListFragment.CountriesListItemClickListener,
-                     CountryDetailsFragment.CountryDetailsBackClickListener,
-                     CountryRepositoryProvider {
+    CountriesListFragment.CountriesListItemClickListener,
+    CountryDetailsFragment.CountryDetailsBackClickListener,
+    CountryRepositoryProvider {
 
     private val networkModule = NetworkModule()
     private val remoteDataSource = RetrofitDataSource(networkModule.api)
@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onCountrySelected(countryId: Int) {
+    override fun onCountrySelected(countryId: Long) {
         routeToCountriesDetails(countryId)
     }
 
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
-    private fun routeToCountriesDetails(movieId: Int) {
+    private fun routeToCountriesDetails(movieId: Long) {
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container,

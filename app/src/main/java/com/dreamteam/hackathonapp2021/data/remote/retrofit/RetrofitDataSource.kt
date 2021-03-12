@@ -12,7 +12,7 @@ class RetrofitDataSource(private val api: CovidCountryStatusApiService) : Remote
             val restrictions = properties.restrictions
             Country(
 //              "country_id": "29475336",
-                properties.countryId,
+                properties.countryId.toLong(),
 //              "country_name": "Австралия",
                 properties.countryName,
 //              "country_code": "AU",

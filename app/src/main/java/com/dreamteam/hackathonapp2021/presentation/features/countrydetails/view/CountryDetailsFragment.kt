@@ -43,7 +43,7 @@ class CountryDetailsFragment : Fragment() {
 
         private const val PARAM_COUNTRY_ID = "country_id"
 
-        fun create(countryId: Int) = CountryDetailsFragment().also {
+        fun create(countryId: Long) = CountryDetailsFragment().also {
             val args = bundleOf(
                 PARAM_COUNTRY_ID to countryId
             )
