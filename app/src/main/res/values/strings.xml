@@ -2,4 +2,5 @@
     <string name="app_name">HackathonApp2021</string>
     <string name="text_countries">Countries</string>
     <string name="country_picture">country_picture</string>
+    <string name="image_view">imageView</string>
 </resources>

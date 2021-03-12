@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.features.main.MainActivity" />
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="">
+
+        <TextView
+            android:id="@+id/country_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="120dp"
+            android:fontFamily="@font/gt_walsheim_pro_regular"
+            tools:text="Japan"
+            android:textColor="#545454"
+            android:textSize="50sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/country_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/gt_walsheim_pro_regular"
+            tools:text="Status"
+            android:textColor="#FF0000"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/arrivals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/gt_walsheim_pro_regular"
+            tools:text="Isolation"
+            android:textColor="#545454"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/country_title"
+            app:drawableLeftCompat="@drawable/ic_arrivals" />
+
+        <TextView
+            android:id="@+id/deparures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/gt_walsheim_pro_regular"
+            tools:text="Isolation"
+            android:textColor="#545454"
+            android:textSize="20sp"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/arrivals"
+            app:drawableLeftCompat="@drawable/ic_departures" />
+
+        <TextView
+            android:id="@+id/restrictions"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:fontFamily="@font/gt_walsheim_pro_regular"
+            android:lineSpacingExtra="4dp"
+            android:textAlignment="textStart"
+            android:textColor="#545454"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/deparures"
+            tools:text="1. Passengers who have been in Afghanistan, Albania, Algeria, Andorra, Antigua and Barbuda, Argentina, Armenia, Austria, Azerbaijan, Bahamas, Bahrain, Bangladesh, Barbados, Belarus, Belgium, Belize, Bhutan, Bolivia, Bosnia and Herzegovina, Botswana, Brazil, Bulgaria, Cameroon, Canada, Cape Verde, Central African Rep., Chile, Comoros, Congo, Congo (Dem. Rep.), Colombia, Costa Rica, Cote d'Ivoire, Croatia, Cuba, Cyprus, Czechia, Denmark, Djibouti, Dominica, Dominican Rep., Ecuador, Egypt, El Salvador, Equatorial Guinea, Estonia, Eswatini (Swaziland), Ethiopia, Finland, France, Gabon, Gambia, Georgia, Germany, Ghana, Greece, Grenada, Guatemala, Guinea, Guinea-Bissau, Guyana, Haiti, Honduras, Hungary, Iceland, India, Indonesia, Iran, Iraq, Ireland (Rep.), Israel, Italy, Jamaica, Jordan, Kazakhstan, Kenya, Kosovo (Rep.), Kuwait, Kyrgyzstan, Latvia, Lebanon, Lesotho, Liberia, Libya, Liechtenstein, Lithuania, Luxembourg, Madagascar, Malawi, Malaysia, Maldives, Malta, Mauritania, Mauritius, Mexico, Moldova (Rep.), Monaco, Montenegro, Morocco, Myanmar, Namibia, Nepal, Netherlands, Nicaragua, Nigeria, North Macedonia (Rep.), Norway, Oman, Pakistan, Palestinian Territory, Panama, Paraguay, Peru, Philippines, Poland, Portugal, Qatar, Romania, Russian Fed., Rwanda, San Marino, Sao Tome and Principe, Saudi Arabia, Senegal, Serbia, Sierra Leone, Slovakia, Slovenia, Somalia, South Africa, South Sudan, Spain, St. Kitts and Nevis, St. Vincent and the Grenadines, Sudan, Suriname, Sweden, Switzerland, Tajikistan, Trinidad and Tobago, Tunisia, Turkey, Ukraine, United Arab Emirates, United Kingdom, Uruguay, USA, Uzbekistan, Vatican City (Holy See), Venezuela, Zambia or Zimbabwe in the past 14 days are not allowed to enter.  \n- This does not apply to:  \n  - nationals of Japan;  \n  - spouses or children of nationals of Japan if they can prove it;  \n  - passengers with a Special Permanent Residence Permit. They must also have a Re-entry Permit or an Embarkation and Disembarkation Card;  \n  - residents of Japan with a re-entry permit;  \n  - passengers with a visa issued by Japan outside Japan. The date of issue must be later than the date when the country of issue was designated by Japan as an area subject to landing denial (details can be found at [http://www.moj.go.jp/content/001332786.pdf](http://www.moj.go.jp/content/001332786.pdf) );  \n  - passengers with a diplomatic or an official visa issued by Japan;  \n  - passengers with a single or multiple-entry visa issued on or before 2 April 2020 by Japanese Embassies or Consulates General in Australia, New Zealand and Taipei Kaohsiung offices of Japan-Taiwan Exchange Association;  \n  - US military personnel;  \n  - civilian personnel of the US armed forces in Japan and their dependents;  \n  - merchant seamen.  \n2. Passengers must complete a \" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
