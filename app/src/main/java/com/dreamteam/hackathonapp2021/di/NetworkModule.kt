@@ -1,20 +1,18 @@
 package com.dreamteam.hackathonapp2021.di
 
-import com.dreamteam.hackathonapp2021.data.remote.retrofit.MovieApiService
+import com.dreamteam.hackathonapp2021.data.remote.retrofit.CovidCountryStatusApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
-import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
 class NetworkModule {
 
-    private val baseUrl = "https://api.themoviedb.org/"
-    private val version = "3/"
+    private val baseUrl = "https://www.skyscanner.ru/"
+    private val basePath = "g/can-i-go-map-api/map/"
 
     private val json = Json {
         prettyPrint = true
@@ -32,36 +30,14 @@ class NetworkModule {
         .writeTimeout(30, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
         .addNetworkInterceptor(loggingInterceptor)
-        .addInterceptor(ApiKeyInterceptor())
         .build()
 
     private val retrofitBuilder = Retrofit.Builder()
-        .baseUrl(baseUrl + version)
+        .baseUrl(baseUrl + basePath)
         .addConverterFactory(json.asConverterFactory(contentType))
         .client(httpClient)
 
     private val retrofit = retrofitBuilder.build()
 
-    val api: MovieApiService by lazy { retrofit.create(MovieApiService::class.java) }
-}
-
-class ApiKeyInterceptor: Interceptor {
-
-    companion object {
-        private const val API_KEY = "51ba76a60220d6833d3d6d4ac4368e53"
-    }
-
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val origin = chain.request()
-        val urlBuilder = origin.url.newBuilder()
-        val url = urlBuilder
-            .addQueryParameter("api_key", API_KEY)
-            .build()
-
-        val requestBuilder = origin.newBuilder()
-            .url(url)
-
-        val request = requestBuilder.build()
-        return chain.proceed(request)
-    }
+    val api: CovidCountryStatusApiService by lazy { retrofit.create(CovidCountryStatusApiService::class.java) }
 }

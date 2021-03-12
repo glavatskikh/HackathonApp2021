@@ -4,64 +4,63 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.data.remote.retrofit.RetrofitDataSource
-import com.dreamteam.hackathonapp2021.di.MovieRepositoryProvider
+import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
 import com.dreamteam.hackathonapp2021.di.NetworkModule
-import com.dreamteam.hackathonapp2021.presentation.features.moviedetails.view.MovieDetailsFragment
-import com.dreamteam.hackathonapp2021.presentation.features.movies.view.MoviesListFragment
-import com.dreamteam.hackathonapp2021.repository.MovieRepository
-import com.dreamteam.hackathonapp2021.repository.MovieRepositoryImpl
+import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
+import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment
+import com.dreamteam.hackathonapp2021.repository.CountryRepository
+import com.dreamteam.hackathonapp2021.repository.CountryRepositoryImpl
 
 class MainActivity : AppCompatActivity(),
-                     MoviesListFragment.MoviesListItemClickListener,
-                     MovieDetailsFragment.MovieDetailsBackClickListener,
-                     MovieRepositoryProvider {
+                     CountriesListFragment.CountriesListItemClickListener,
+                     CountryDetailsFragment.CountryDetailsBackClickListener,
+                     CountryRepositoryProvider {
 
     private val networkModule = NetworkModule()
     private val remoteDataSource = RetrofitDataSource(networkModule.api)
-    private val movieRepository = MovieRepositoryImpl(remoteDataSource)
+    private val countryRepository = CountryRepositoryImpl(remoteDataSource)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if (savedInstanceState == null) {
-            routeToMoviesList()
+            routeToCountriesList()
         }
     }
 
-    override fun onMovieSelected(movieId: Int) {
-        routeToMovieDetails(movieId)
+    override fun onCountrySelected(countryId: Int) {
+        routeToCountriesDetails(countryId)
     }
 
-    override fun onMovieDeselected() {
-        routeBack()
+    override fun onCountryDeselected() {
+//        routeBack()
     }
 
-    private fun routeToMoviesList() {
+    private fun routeToCountriesList() {
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,
-                MoviesListFragment.create(),
-                MoviesListFragment::class.java.simpleName
+                CountriesListFragment.create(),
+                CountriesListFragment::class.java.simpleName
             )
-            .addToBackStack("trans:${MoviesListFragment::class.java.simpleName}")
+            .addToBackStack("trans:${CountriesListFragment::class.java.simpleName}")
             .commit()
     }
 
-    private fun routeToMovieDetails(movieId: Int) {
+    private fun routeToCountriesDetails(movieId: Int) {
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container,
-                MovieDetailsFragment.create(movieId),
-                MovieDetailsFragment::class.java.simpleName
+                CountryDetailsFragment.create(movieId),
+                CountryDetailsFragment::class.java.simpleName
             )
-            .addToBackStack("trans:${MovieDetailsFragment::class.java.simpleName}")
+            .addToBackStack("trans:${CountryDetailsFragment::class.java.simpleName}")
             .commit()
     }
 
-    private fun routeBack() {
-        supportFragmentManager.popBackStack()
-    }
+//    private fun routeBack() {
+//        supportFragmentManager.popBackStack()
+//    }
 
-    override fun provideMovieRepository(): MovieRepository = movieRepository
+    override fun provideCountryRepository(): CountryRepository = countryRepository
 }

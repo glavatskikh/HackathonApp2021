@@ -1,10 +1,7 @@
 package com.dreamteam.hackathonapp2021.data.remote
 
-import com.dreamteam.hackathonapp2021.model.Movie
-import com.dreamteam.hackathonapp2021.model.MovieDetails
+import com.dreamteam.hackathonapp2021.model.Country
 
 interface RemoteDataSource {
-
-    suspend fun loadMovies(): List<Movie>
-    suspend fun loadMovie(movieId: Int): MovieDetails
+    suspend fun loadCovidCountriesStatus(): List<Country>
 }

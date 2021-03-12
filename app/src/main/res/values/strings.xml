@@ -1,22 +1,3 @@
 <resources>
-
-    <string name="app_name">Fundamentals Homework</string>
-
-    <!-- Movies list screen -->
-    <string name="movies_list_title">Movies app</string>
-    <string name="movies_list_header_text">Movies app</string>
-    <string name="movies_list_header_icon_description">Target icon</string>
-    <string name="movies_list_allowed_age_template">%d+</string>
-    <string name="movies_list_reviews_template">%d REVIEWS</string>
-    <string name="movies_list_rating_bar_description">Rating bar</string>
-    <string name="movies_list_film_time">%d MIN</string>
-    <!-- Movies list screen -->
-
-    <!-- Movie Details screen -->
-    <string name="back">Back</string>
-    <string name="storyline_title">Storyline</string>
-    <string name="cast_title">Cast</string>
-    <string name="error_movie_not_found">Sorry! Something went wrong - we can not find this movie in the system.</string>
-    <!-- Movie Details screen -->
-
+    <string name="app_name">HackathonApp2021</string>
 </resources>
