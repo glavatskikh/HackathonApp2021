@@ -12,6 +12,7 @@ object NetworkModule {
 
     private val baseUrl = "https://www.skyscanner.ru/"
     private val basePath = "g/can-i-go-map-api/map/"
+    private val baseUrlPhoto = "https://pixabay.com/"
 
     private val json = Json {
         prettyPrint = true
@@ -36,7 +37,15 @@ object NetworkModule {
         .addConverterFactory(json.asConverterFactory(contentType))
         .client(httpClient)
 
+    private val retrofitBuilderPhoto = Retrofit.Builder()
+        .baseUrl(baseUrlPhoto)
+        .addConverterFactory(json.asConverterFactory(contentType))
+        .client(httpClient)
+
     private val retrofit = retrofitBuilder.build()
+    private val retrofitPhoto = retrofitBuilderPhoto.build()
 
     val api: CountriesApi by lazy { retrofit.create(CountriesApi::class.java) }
+    val apiPhoto: CountryPhotoApi by lazy { retrofitPhoto.create(CountryPhotoApi::class.java) }
+
 }
