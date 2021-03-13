@@ -2,17 +2,17 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_movie"
+    android:id="@+id/card_country"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="4dp"
+    android:padding="2dp"
     app:cardBackgroundColor="#FFFFFF"
     app:cardCornerRadius="8dp"
     app:cardPreventCornerOverlap="false"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/button_target"
-    app:strokeWidth="1dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="2dp">
+    app:strokeWidth="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:background="#FFFFFF">
 
         <ImageView
-            android:id="@+id/card_poster"
+            android:id="@+id/country_poster"
             android:layout_width="167dp"
             android:layout_height="112dp"
             android:adjustViewBounds="true"

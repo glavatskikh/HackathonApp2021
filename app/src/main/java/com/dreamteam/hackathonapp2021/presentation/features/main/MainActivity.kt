@@ -3,22 +3,14 @@ package com.dreamteam.hackathonapp2021.presentation.features.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.dreamteam.hackathonapp2021.R
-import com.dreamteam.hackathonapp2021.data.remote.retrofit.RetrofitDataSource
-import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
-import com.dreamteam.hackathonapp2021.di.NetworkModule
-import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
 import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment
-import com.dreamteam.hackathonapp2021.repository.CountryRepository
-import com.dreamteam.hackathonapp2021.repository.CountryRepositoryImpl
+import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment.CountriesListItemClickListener
+import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
+import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment.CountryDetailsBackClickListener
 
 class MainActivity : AppCompatActivity(),
-                     CountriesListFragment.CountriesListItemClickListener,
-                     CountryDetailsFragment.CountryDetailsBackClickListener,
-                     CountryRepositoryProvider {
-
-    private val networkModule = NetworkModule()
-    private val remoteDataSource = RetrofitDataSource(networkModule.api)
-    private val countryRepository = CountryRepositoryImpl(remoteDataSource)
+    CountriesListItemClickListener,
+    CountryDetailsBackClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +20,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onCountrySelected(countryId: Int) {
+    override fun onCountrySelected(countryId: Long) {
         routeToCountriesDetails(countryId)
     }
 
@@ -47,11 +39,11 @@ class MainActivity : AppCompatActivity(),
             .commit()
     }
 
-    private fun routeToCountriesDetails(movieId: Int) {
+    private fun routeToCountriesDetails(countryId: Long) {
         supportFragmentManager.beginTransaction()
             .add(
                 R.id.container,
-                CountryDetailsFragment.create(movieId),
+                CountryDetailsFragment.create(countryId),
                 CountryDetailsFragment::class.java.simpleName
             )
             .addToBackStack("trans:${CountryDetailsFragment::class.java.simpleName}")
@@ -61,6 +53,4 @@ class MainActivity : AppCompatActivity(),
 //    private fun routeBack() {
 //        supportFragmentManager.popBackStack()
 //    }
-
-    override fun provideCountryRepository(): CountryRepository = countryRepository
 }
