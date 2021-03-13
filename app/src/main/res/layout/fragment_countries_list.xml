@@ -10,14 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:fitsSystemWindows="true"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/colllapsing_toolbar_background"
-            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll"
             app:toolbarId="@+id/toolbar">
 
@@ -90,7 +88,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF">
+            android:background="@android:color/white">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/countries"
@@ -98,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="44dp"
-                android:background="#FFFFFF"
+                android:background="@android:color/white"
                 android:fontFamily="@font/gt_walsheim_pro_regular"
                 android:text="@string/text_countries"
                 android:textColor="#545454"
@@ -133,5 +131,4 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

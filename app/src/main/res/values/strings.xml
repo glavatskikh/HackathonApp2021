@@ -3,4 +3,11 @@
     <string name="text_countries">Countries</string>
     <string name="country_picture">country_picture</string>
     <string name="image_view">imageView</string>
+    <string name="img_airplane">img_airplane</string>
+    <string name="img_cloud_1">img_cloud_1</string>
+    <string name="img_cloud_2">img_cloud_2</string>
+    <string name="img_cloud_3">img_cloud_3</string>
+    <string name="arrivals">arrivals</string>
+    <string name="deparures">deparures</string>
+    <string name="text_button_back">Back</string>
 </resources>
