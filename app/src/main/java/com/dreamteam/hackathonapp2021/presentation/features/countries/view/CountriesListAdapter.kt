@@ -19,13 +19,13 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
-    ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
+        ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.country_item, parent, false)
+                LayoutInflater.from(parent.context)
+                        .inflate(R.layout.country_item, parent, false)
         )
     }
 
@@ -35,7 +35,7 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val scope = CoroutineScope(Dispatchers.IO)
+        val scope = CoroutineScope(Dispatchers.Main)
 
         private val countryImage: ImageView = itemView.findViewById(R.id.country_poster)
         private val countryName: TextView = itemView.findViewById(R.id.country_name)
@@ -46,12 +46,14 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
                 crossfade(true)
             }
             scope.launch {
-            val loadUrlPhoto = NetworkModule.apiPhoto.loadCountryPhoto(q=item.name).hits[0].previewURL
-                Glide
-                    .with(countryImage.context)
-                    .load(loadUrlPhoto)
-                    .override(176,112)
-                    .into(countryImage)
+
+                val loadUrlPhoto = NetworkModule.apiPhoto.loadCountryPhoto(q = "город+"+item.name)
+                loadUrlPhoto.hits.forEach { photo ->
+                    Glide.with(countryImage.context)
+                            .load(photo.webformatURL)
+                            .override(176, 112)
+                            .into(countryImage)
+                     }
 
             }
 
