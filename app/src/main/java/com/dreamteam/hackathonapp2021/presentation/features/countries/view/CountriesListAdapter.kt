@@ -9,11 +9,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.dreamteam.hackathonapp2021.R
+import com.dreamteam.hackathonapp2021.data.api.NetworkModule
 import com.dreamteam.hackathonapp2021.model.Country
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
     ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -28,6 +35,7 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val scope = CoroutineScope(Dispatchers.IO)
 
         private val countryImage: ImageView = itemView.findViewById(R.id.country_poster)
         private val countryName: TextView = itemView.findViewById(R.id.country_name)
@@ -37,6 +45,16 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
             countryImage.load(R.drawable.temp) {
                 crossfade(true)
             }
+            scope.launch {
+            val loadUrlPhoto = NetworkModule.apiPhoto.loadCountryPhoto(q=item.name).hits[0].previewURL
+                Glide
+                    .with(countryImage.context)
+                    .load(loadUrlPhoto)
+                    .override(176,112)
+                    .into(countryImage)
+
+            }
+
             itemView.setOnClickListener {
                 onClickCard(item)
             }
