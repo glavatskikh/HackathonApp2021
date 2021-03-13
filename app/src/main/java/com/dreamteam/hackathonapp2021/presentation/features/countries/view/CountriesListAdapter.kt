@@ -15,17 +15,16 @@ import com.dreamteam.hackathonapp2021.data.api.NetworkModule
 import com.dreamteam.hackathonapp2021.model.Country
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
-        ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
+    ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-                LayoutInflater.from(parent.context)
-                        .inflate(R.layout.country_item, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.country_item, parent, false)
         )
     }
 
@@ -42,18 +41,21 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
 
         fun bind(item: Country, onClickCard: (country: Country) -> Unit) {
             countryName.text = item.name
-            countryImage.load(R.drawable.temp) {
-                crossfade(true)
-            }
+            // TODO: 14.03.2021 change scope logic
             scope.launch {
-
-                val loadUrlPhoto = NetworkModule.apiPhoto.loadCountryPhoto(q = "город+"+item.name)
-                loadUrlPhoto.hits.forEach { photo ->
+                val loadUrlPhoto =
+                    NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
+                if (loadUrlPhoto.hits.isNotEmpty()) {
+                    val photo = loadUrlPhoto.hits.first()
                     Glide.with(countryImage.context)
-                            .load(photo.webformatURL)
-                            .override(176, 112)
-                            .into(countryImage)
-                     }
+                        .load(photo.webformatURL)
+                        .override(176, 112)
+                        .into(countryImage)
+                } else {
+                    countryImage.load(R.drawable.temp) {
+                        crossfade(true)
+                    }
+                }
 
             }
 
