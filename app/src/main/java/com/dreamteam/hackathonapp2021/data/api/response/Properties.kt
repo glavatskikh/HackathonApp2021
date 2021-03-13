@@ -13,5 +13,7 @@ data class Properties(
     @SerialName("country_name")
     val countryName: String,
     @SerialName("restrictions")
-    val restrictions: Restrictions? = null
+    val restrictions: Restrictions? = null,
+    @SerialName("centroid")
+    val centroid: Centroid
 )

@@ -10,16 +10,18 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dreamteam.hackathonapp2021.R
-import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.model.Country
+import com.dreamteam.hackathonapp2021.model.weather.Temperature
+import com.dreamteam.hackathonapp2021.model.weather.Weather
+import com.dreamteam.hackathonapp2021.model.weather.Wind
+import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.viewmodel.CountryDetailsViewModel
 import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.viewmodel.CountryDetailsViewModelFactory
-import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.viewmodel.CountryDetailsViewModelImpl
 import kotlinx.android.synthetic.main.fragment_country_details.*
 
 class CountryDetailsFragment : Fragment() {
 
-    private val viewModel: CountryDetailsViewModelImpl by viewModels {
-        CountryDetailsViewModelFactory(Dependencies.countriesRepository)
+    private val viewModel: CountryDetailsViewModel by viewModels {
+        CountryDetailsViewModelFactory()
     }
 
     private var listener: CountryDetailsBackClickListener? = null
@@ -42,6 +44,10 @@ class CountryDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val country: Country = arguments?.getParcelable(PARAM_COUNTRY) ?: return
         updateCountryDetailsInfo(country)
+        viewModel.getWeather(country.coordinate.lat, country.coordinate.lng)
+        viewModel.weatherData.observe(viewLifecycleOwner, {setWeather(it)})
+        viewModel.temperatureData.observe(viewLifecycleOwner, {setTemperature(it)})
+        viewModel.windData.observe(viewLifecycleOwner, {setInfoByWindy(it)})
     }
 
     @SuppressLint("SetTextI18n")
@@ -57,6 +63,42 @@ class CountryDetailsFragment : Fragment() {
             }
         }
     }
+
+    private fun setWeather(weather: Weather) {
+        weather.apply {
+            weather_status.text = description
+            when {
+                weather.main == "Clear" -> img_weather.setImageResource(R.drawable.ic_sun)
+                weather.main == "Snow" -> img_weather.setImageResource(R.drawable.ic_snowy)
+                weather.main == "Rain" -> img_weather.setImageResource(R.drawable.ic_rainy)
+                weather.main == "Clouds" -> img_weather.setImageResource(R.drawable.ic_cloudy)
+                else -> img_weather.setImageResource(R.drawable.ic_storm)
+            }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setTemperature(temperature: Temperature) {
+        when {
+            temperature.temp > 0.0 -> text_temperature.text = "+${temperature.temp}"
+            temperature.temp == 0.0 -> text_temperature.text = temperature.temp.toString()
+            temperature.temp < 0.0 -> text_temperature.text = "-${temperature.temp}"
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setInfoByWindy(wind: Wind) {
+        when{
+            wind.deg in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed} м/с"
+            wind.deg in 61..120 -> wind_status.text = "Ветер В ${wind.speed} м/с"
+            wind.deg in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed} м/с"
+            wind.deg in 151..210 -> wind_status.text = "Ветер Ю ${wind.speed} м/с"
+            wind.deg in 211..240 -> wind_status.text = "Ветер ЮЗ ${wind.speed} м/с"
+            wind.deg in 241..300 -> wind_status.text = "Ветер З ${wind.speed} м/с"
+            else -> wind_status.text = "Ветер С ${wind.speed} м/с"
+        }
+    }
+
 
     interface CountryDetailsBackClickListener {
         fun onCountryDeselected()

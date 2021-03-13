@@ -72,7 +72,7 @@
                     tools:srcCompat="@drawable/ic_cloudy" />
 
                 <TextView
-                    android:id="@+id/temperature"
+                    android:id="@+id/text_temperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/gt_walsheim_pro_regular"
@@ -96,7 +96,7 @@
                     android:textColor="#545454"
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/temperature"
+                    app:layout_constraintStart_toEndOf="@+id/text_temperature"
                     app:layout_constraintTop_toBottomOf="@+id/img_weather"
                     tools:text="Облачно" />
 
@@ -109,10 +109,9 @@
                     android:paddingBottom="4dp"
                     android:textColor="#545454"
                     android:textSize="12sp"
-                    app:layout_constraintEnd_toEndOf="@+id/img_weather"
-                    app:layout_constraintStart_toStart="parent"
-                    app:layout_constraintStart_toStartOf="@+id/img_weather"
-                    app:layout_constraintTop_toBottomOf="@+id/temperature"
+                    app:layout_constraintEnd_toEndOf="@+id/weather_status"
+                    app:layout_constraintStart_toStartOf="@+id/text_temperature"
+                    app:layout_constraintTop_toBottomOf="@+id/text_temperature"
                     tools:text="Ветер 5 м/с" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
