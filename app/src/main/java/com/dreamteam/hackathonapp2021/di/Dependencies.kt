@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 import com.dreamteam.hackathonapp2021.data.DataSource
 import com.dreamteam.hackathonapp2021.data.api.ApiDataSource
 import com.dreamteam.hackathonapp2021.data.cache.LocalDataSource
-import com.dreamteam.hackathonapp2021.model.CountryRepositoryImpl
+import com.dreamteam.hackathonapp2021.repository.CountryRepositoryImpl
 
 object Dependencies {
 

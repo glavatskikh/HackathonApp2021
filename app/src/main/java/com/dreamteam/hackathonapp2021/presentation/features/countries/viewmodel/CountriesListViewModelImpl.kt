@@ -3,9 +3,9 @@ package com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.dreamteam.hackathonapp2021.model.CountriesResult
+import com.dreamteam.hackathonapp2021.repository.CountriesResult
 import com.dreamteam.hackathonapp2021.model.Country
-import com.dreamteam.hackathonapp2021.model.CountryRepository
+import com.dreamteam.hackathonapp2021.repository.CountryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

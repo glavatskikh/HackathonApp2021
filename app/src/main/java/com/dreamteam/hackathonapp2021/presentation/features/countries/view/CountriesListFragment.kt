@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.di.Dependencies
+import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
 
@@ -62,7 +63,7 @@ class CountriesListFragment : Fragment() {
     }
 
     interface CountriesListItemClickListener {
-        fun onCountrySelected(countryId: Long)
+        fun onCountrySelected(country: Country)
     }
 
     companion object {

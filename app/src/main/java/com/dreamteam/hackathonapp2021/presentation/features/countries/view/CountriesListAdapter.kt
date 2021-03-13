@@ -12,7 +12,7 @@ import coil.load
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.model.Country
 
-class CountriesListAdapter(private val onClickCard: (countryId: Long) -> Unit) :
+class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
     ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,13 +32,13 @@ class CountriesListAdapter(private val onClickCard: (countryId: Long) -> Unit) :
         private val countryImage: ImageView = itemView.findViewById(R.id.country_poster)
         private val countryName: TextView = itemView.findViewById(R.id.country_name)
 
-        fun bind(item: Country, onClickCard: (countryId: Long) -> Unit) {
+        fun bind(item: Country, onClickCard: (country: Country) -> Unit) {
             countryName.text = item.name
             countryImage.load(R.drawable.temp) {
                 crossfade(true)
             }
             itemView.setOnClickListener {
-                onClickCard(item.id)
+                onClickCard(item)
             }
         }
     }
