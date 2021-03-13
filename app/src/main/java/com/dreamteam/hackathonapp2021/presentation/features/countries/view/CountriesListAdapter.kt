@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
     ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
 
+    private val unfilteredList: MutableList<Country> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -33,9 +34,27 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
         holder.bind(item, onClickCard)
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val scope = CoroutineScope(Dispatchers.Main)
+    override fun submitList(list: List<Country>?) {
+        if (list != null) {
+            unfilteredList.clear()
+            unfilteredList.addAll(list)
+        }
+        super.submitList(list)
+    }
 
+    fun filter(query: CharSequence?) {
+        val list = mutableListOf<Country>()
+        if (!query.isNullOrEmpty()) {
+            list.addAll(unfilteredList.filter {
+                it.name.contains(other = query, ignoreCase = true)
+            })
+        } else {
+            list.addAll(unfilteredList)
+        }
+        super.submitList(list)
+    }
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val countryImage: ImageView = itemView.findViewById(R.id.country_poster)
         private val countryName: TextView = itemView.findViewById(R.id.country_name)
 
@@ -58,10 +77,13 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
                 }
 
             }
-
             itemView.setOnClickListener {
                 onClickCard(item)
             }
+        }
+
+        companion object {
+            private val scope = CoroutineScope(Dispatchers.Main)
         }
     }
 
