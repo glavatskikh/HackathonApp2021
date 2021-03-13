@@ -11,7 +11,8 @@ import kotlinx.serialization.json.Json
 class LocalDataSource(private val preferences: SharedPreferences) : CountriesDataSource {
 
     override fun hasData(): Boolean {
-        return preferences.contains(PARAM_COUNTRIES)
+//        return preferences.contains(PARAM_COUNTRIES)
+        return false
     }
 
     override fun getCountries(callback: (CountriesResult) -> Unit) {
