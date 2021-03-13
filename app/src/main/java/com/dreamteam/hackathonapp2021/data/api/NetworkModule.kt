@@ -1,6 +1,5 @@
-package com.dreamteam.hackathonapp2021.di
+package com.dreamteam.hackathonapp2021.data.api
 
-import com.dreamteam.hackathonapp2021.data.remote.retrofit.CovidCountryStatusApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -9,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 
-class NetworkModule {
+object NetworkModule {
 
     private val baseUrl = "https://www.skyscanner.ru/"
     private val basePath = "g/can-i-go-map-api/map/"
@@ -39,5 +38,5 @@ class NetworkModule {
 
     private val retrofit = retrofitBuilder.build()
 
-    val api: CovidCountryStatusApiService by lazy { retrofit.create(CovidCountryStatusApiService::class.java) }
+    val api: CountriesApi by lazy { retrofit.create(CountriesApi::class.java) }
 }
