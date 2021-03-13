@@ -10,4 +10,5 @@
     <string name="arrivals">arrivals</string>
     <string name="departures">departures</string>
     <string name="text_button_back">Back</string>
+    <string name="weather_status">weather_status</string>
 </resources>
