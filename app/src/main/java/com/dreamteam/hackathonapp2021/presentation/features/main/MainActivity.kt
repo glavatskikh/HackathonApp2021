@@ -7,11 +7,8 @@ import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment
 import com.dreamteam.hackathonapp2021.presentation.features.countries.view.CountriesListFragment.CountriesListItemClickListener
 import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment
-import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view.CountryDetailsFragment.CountryDetailsBackClickListener
 
-class MainActivity : AppCompatActivity(),
-    CountriesListItemClickListener,
-    CountryDetailsBackClickListener {
+class MainActivity : AppCompatActivity(), CountriesListItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +20,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCountrySelected(country: Country) {
         routeToCountriesDetails(country)
-    }
-
-    override fun onCountryDeselected() {
-//        routeBack()
     }
 
     private fun routeToCountriesList() {
@@ -50,8 +43,4 @@ class MainActivity : AppCompatActivity(),
             .addToBackStack("trans:${CountryDetailsFragment::class.java.simpleName}")
             .commit()
     }
-
-//    private fun routeBack() {
-//        supportFragmentManager.popBackStack()
-//    }
 }
