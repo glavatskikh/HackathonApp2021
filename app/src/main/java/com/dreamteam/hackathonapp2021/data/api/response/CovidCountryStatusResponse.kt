@@ -1,4 +1,4 @@
-package com.dreamteam.hackathonapp2021.data.remote.retrofit.response
+package com.dreamteam.hackathonapp2021.data.api.response
 
 
 import kotlinx.serialization.SerialName

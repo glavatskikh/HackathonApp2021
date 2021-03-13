@@ -9,14 +9,14 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dreamteam.hackathonapp2021.R
-import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
+import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.viewmodel.CountryDetailsViewModelFactory
 import com.dreamteam.hackathonapp2021.presentation.features.countrydetails.viewmodel.CountryDetailsViewModelImpl
 
 class CountryDetailsFragment : Fragment() {
 
     private val viewModel: CountryDetailsViewModelImpl by viewModels {
-        CountryDetailsViewModelFactory((requireActivity() as CountryRepositoryProvider).provideCountryRepository())
+        CountryDetailsViewModelFactory(Dependencies.countriesRepository)
     }
 
     private var listener: CountryDetailsBackClickListener? = null

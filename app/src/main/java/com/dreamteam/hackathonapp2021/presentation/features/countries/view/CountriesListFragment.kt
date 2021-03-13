@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dreamteam.hackathonapp2021.R
-import com.dreamteam.hackathonapp2021.di.CountryRepositoryProvider
+import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
 
 class CountriesListFragment : Fragment() {
 
     private val viewModel: CountriesListViewModelImpl by viewModels {
-        CountryListViewModelFactory((requireActivity() as CountryRepositoryProvider).provideCountryRepository())
+        CountryListViewModelFactory(Dependencies.countriesRepository)
     }
 
     private var listener: CountriesListItemClickListener? = null
@@ -42,8 +42,8 @@ class CountriesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<RecyclerView>(R.id.recycler_countries).apply {
             this.layoutManager = GridLayoutManager(this.context, 2)
-            val adapter = CountriesListAdapter { movieData ->
-                listener?.onCountrySelected(movieData)
+            val adapter = CountriesListAdapter { countryData ->
+                listener?.onCountrySelected(countryData)
             }
             this.adapter = adapter
             loadDataToAdapter(adapter)

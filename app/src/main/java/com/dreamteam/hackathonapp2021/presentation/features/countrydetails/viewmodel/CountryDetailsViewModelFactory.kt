@@ -2,7 +2,7 @@ package com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dreamteam.hackathonapp2021.repository.CountryRepository
+import com.dreamteam.hackathonapp2021.model.CountryRepository
 
 class CountryDetailsViewModelFactory(private val repository: CountryRepository) :
     ViewModelProvider.Factory {
