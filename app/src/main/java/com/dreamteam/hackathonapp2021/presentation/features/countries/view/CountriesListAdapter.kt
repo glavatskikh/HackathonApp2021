@@ -15,6 +15,8 @@ import com.dreamteam.hackathonapp2021.model.Country
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
     ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
 
+    private val unfilteredList: MutableList<Country> = mutableListOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
@@ -25,6 +27,26 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, onClickCard)
+    }
+
+    override fun submitList(list: List<Country>?) {
+        if (list != null) {
+            unfilteredList.clear()
+            unfilteredList.addAll(list)
+        }
+        super.submitList(list)
+    }
+
+    fun filter(query: CharSequence?) {
+        val list = mutableListOf<Country>()
+        if (!query.isNullOrEmpty()) {
+            list.addAll(unfilteredList.filter {
+                it.name.contains(other = query, ignoreCase = true)
+            })
+        } else {
+            list.addAll(unfilteredList)
+        }
+        super.submitList(list)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
