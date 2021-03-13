@@ -1,27 +1,26 @@
 package com.dreamteam.hackathonapp2021.data.cache
 
 import android.content.SharedPreferences
-import com.dreamteam.hackathonapp2021.data.CountriesDataSource
-import com.dreamteam.hackathonapp2021.data.CountriesResult
+import com.dreamteam.hackathonapp2021.data.DataSource
+import com.dreamteam.hackathonapp2021.data.DataSourceResult
 import com.dreamteam.hackathonapp2021.data.api.response.Feature
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class LocalDataSource(private val preferences: SharedPreferences) : CountriesDataSource {
+class LocalDataSource(private val preferences: SharedPreferences) : DataSource {
 
-    override fun hasData(): Boolean {
-//        return preferences.contains(PARAM_COUNTRIES)
-        return false
+    override suspend fun hasData(): Boolean {
+        return preferences.contains(PARAM_COUNTRIES)
     }
 
-    override fun getCountries(callback: (CountriesResult) -> Unit) {
+    override suspend fun getCountries(): DataSourceResult {
         val jsonList = preferences.getString(PARAM_COUNTRIES, null)
-        if (jsonList.isNullOrEmpty()) {
-            callback(CountriesResult.Error("local store error"))
+        return if (jsonList.isNullOrEmpty()) {
+            DataSourceResult.Error("local store error")
         } else {
             val features: List<Feature> = Json.decodeFromString(jsonList)
-            callback(CountriesResult.Success(features))
+            DataSourceResult.Success(features)
         }
     }
 

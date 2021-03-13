@@ -3,10 +3,12 @@ package com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.dreamteam.hackathonapp2021.model.CountriesResult
 import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.model.CountryRepository
-import com.dreamteam.hackathonapp2021.model.Result
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 internal class CountriesListViewModelImpl(
     private val repository: CountryRepository
@@ -25,10 +27,9 @@ internal class CountriesListViewModelImpl(
         viewModelScope.launch {
             try {
                 _progressBarVisibleLiveData.value = true
-                repository.getCountries { result ->
-                    when (result) {
-                        is Result.Success -> countriesOutput.postValue(result.countries)
-                    }
+                when (val result =
+                    withContext(Dispatchers.IO) { repository.getCountries() }) {
+                    is CountriesResult.Success -> countriesOutput.postValue(result.countries)
                 }
             } catch (error: Throwable) {
                 error.printStackTrace()

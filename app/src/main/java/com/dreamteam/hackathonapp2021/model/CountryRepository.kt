@@ -1,13 +1,12 @@
 package com.dreamteam.hackathonapp2021.model
 
-
 interface CountryRepository {
-    suspend fun getCountries(callback: (Result) -> Unit)
+    suspend fun getCountries(): CountriesResult
 }
 
-sealed class Result {
+sealed class CountriesResult {
 
-    data class Success(val countries: List<Country>) : Result()
+    data class Success(val countries: List<Country>) : CountriesResult()
 
-    data class Error(val message: String) : Result()
+    data class Error(val message: String) : CountriesResult()
 }

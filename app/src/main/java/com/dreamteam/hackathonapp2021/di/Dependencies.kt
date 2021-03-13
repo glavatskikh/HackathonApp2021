@@ -1,9 +1,9 @@
 package com.dreamteam.hackathonapp2021.di
 
 import android.content.SharedPreferences
+import com.dreamteam.hackathonapp2021.data.DataSource
 import com.dreamteam.hackathonapp2021.data.api.ApiDataSource
 import com.dreamteam.hackathonapp2021.data.cache.LocalDataSource
-import com.dreamteam.hackathonapp2021.data.CountriesDataSource
 import com.dreamteam.hackathonapp2021.model.CountryRepositoryImpl
 
 object Dependencies {
@@ -25,8 +25,8 @@ object Dependencies {
     }
 
     private fun createCountriesRepository(
-        onlineDataSource: CountriesDataSource,
-        localDataSource: CountriesDataSource
+        onlineDataSource: DataSource,
+        localDataSource: DataSource
     ): CountryRepositoryImpl {
         return CountryRepositoryImpl(
             onlineDataSource = onlineDataSource,
