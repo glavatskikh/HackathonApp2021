@@ -9,8 +9,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.bumptech.glide.Glide
 import com.dreamteam.hackathonapp2021.R
+import com.dreamteam.hackathonapp2021.data.api.NetworkModule
 import com.dreamteam.hackathonapp2021.model.Country
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) :
     ListAdapter<Country, CountriesListAdapter.ViewHolder>(DiffCallback()) {
@@ -50,18 +55,35 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val countryImage: ImageView = itemView.findViewById(R.id.country_poster)
         private val countryName: TextView = itemView.findViewById(R.id.country_name)
 
         fun bind(item: Country, onClickCard: (country: Country) -> Unit) {
             countryName.text = item.name
-            countryImage.load(R.drawable.temp) {
-                crossfade(true)
+            // TODO: 14.03.2021 change scope logic
+            scope.launch {
+                val loadUrlPhoto =
+                    NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
+                if (loadUrlPhoto.hits.isNotEmpty()) {
+                    val photo = loadUrlPhoto.hits.first()
+                    Glide.with(countryImage.context)
+                        .load(photo.webformatURL)
+                        .override(176, 112)
+                        .into(countryImage)
+                } else {
+                    countryImage.load(R.drawable.temp) {
+                        crossfade(true)
+                    }
+                }
+
             }
             itemView.setOnClickListener {
                 onClickCard(item)
             }
+        }
+
+        companion object {
+            private val scope = CoroutineScope(Dispatchers.Main)
         }
     }
 
