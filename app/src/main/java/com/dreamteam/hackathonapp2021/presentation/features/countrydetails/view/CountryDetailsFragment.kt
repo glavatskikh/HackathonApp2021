@@ -1,7 +1,6 @@
 package com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,16 +24,6 @@ class CountryDetailsFragment : Fragment() {
         CountryDetailsViewModelFactory()
     }
 
-    private var listener: CountryDetailsBackClickListener? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // TODO: 12.03.2021 bad
-        if (context is CountryDetailsBackClickListener) {
-            listener = context
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
     ): View? {
@@ -46,11 +35,11 @@ class CountryDetailsFragment : Fragment() {
         val country: Country = arguments?.getParcelable(PARAM_COUNTRY) ?: return
         updateCountryDetailsInfo(country)
         /*country.coordinate?.let { viewModel.getWeather(it.lat, country.coordinate.lng) }*/
-        if(country.coordinate != null) {
+        if (country.coordinate != null) {
             viewModel.getWeather(country.coordinate.lat, country.coordinate.lng)
-            viewModel.weatherData.observe(viewLifecycleOwner, {setWeather(it)})
-            viewModel.temperatureData.observe(viewLifecycleOwner, {setTemperature(it)})
-            viewModel.windData.observe(viewLifecycleOwner, {setInfoByWindy(it)})
+            viewModel.weatherData.observe(viewLifecycleOwner, { setWeather(it) })
+            viewModel.temperatureData.observe(viewLifecycleOwner, { setTemperature(it) })
+            viewModel.windData.observe(viewLifecycleOwner, { setInfoByWindy(it) })
         } else {
             cardView.isInvisible
         }
@@ -61,6 +50,8 @@ class CountryDetailsFragment : Fragment() {
         country.apply {
             country_title.text = name
             countryRestrictions?.let {
+                country_status.text = it.travelStatus.status
+                country_status.setTextColor(resources.getColor(it.travelStatus.statusColor))
                 country_arrivals.text = "$name: по прибитии"
                 country_arrivals_isolation_status.text = it.destinationSelfIsolation
                 country_departures.text = "$returnCountryName: по возвращении"
@@ -94,7 +85,7 @@ class CountryDetailsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setInfoByWindy(wind: Wind) {
-        when{
+        when {
             wind.deg in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed.toInt()} м/с"
             wind.deg in 61..120 -> wind_status.text = "Ветер В ${wind.speed.toInt()} м/с"
             wind.deg in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed.toInt()} м/с"

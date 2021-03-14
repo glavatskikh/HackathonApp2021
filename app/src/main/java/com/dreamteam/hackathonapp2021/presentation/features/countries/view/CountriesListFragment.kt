@@ -44,19 +44,28 @@ class CountriesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapter = CountriesListAdapter { countryData ->
+            listener?.onCountrySelected(countryData)
+        }
         view.findViewById<RecyclerView>(R.id.recycler_countries).apply {
             this.layoutManager = GridLayoutManager(this.context, 2)
-            val adapter = CountriesListAdapter { countryData ->
-                listener?.onCountrySelected(countryData)
-            }
             this.adapter = adapter
             loadDataToAdapter(adapter)
         }
+        search_view.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText)
+                return true
+            }
+        })
     }
 
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {
         viewModel.countriesOutput.observe(viewLifecycleOwner, { countriesList ->
             adapter.submitList(countriesList)
+            adapter.currentList
         })
         viewModel.progressBarVisibleLiveData.observe(viewLifecycleOwner, {
             when (it) {
