@@ -1,11 +1,12 @@
 package com.dreamteam.hackathonapp2021.presentation.features.countries.view
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.model.Country
+import com.dreamteam.hackathonapp2021.model.MasterTravelStatus
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
 import com.javier.filterview.FilterView
@@ -76,27 +78,50 @@ class CountriesListFragment : Fragment() {
             "въезд закрыт",
         )
 
-        val tagSection = TagSection.Builder("Tags", 4)
-            .setSectionNameColor(R.color.colorAccent)
-            .setSelectedColor(R.color.colorAccent)
-            .setDeselectedColor(R.color.colorPrimary)
-            .setSelectedFontColor(R.color.colorPrimaryDark)
-            .setDeselectedFontColor(R.color.colorAccent)
+        val tagSection = TagSection.Builder("Фильтры поиска", 4)
+            .setSectionNameColor(android.R.color.black)
+            .setSelectedFontColor(android.R.color.black)
+            .setSelectedColor(R.color.toolbar_color_one)
+            .setDeselectedColor(R.color.toolbar_color)
+            .setDeselectedFontColor(R.color.grey)
             .setGravity(TagGravity.CENTER)
             .setMode(TagMode.MULTI)
             .setLabels(data)
             .build()
-        FilterView.Builder(requireContext())
-            .withTitle("Фильтры поиска")
+
+
+        val dialog =
+            object : Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
+                override fun onCreate(savedInstanceState: Bundle?) {
+                    super.onCreate(savedInstanceState)
+                    window?.setLayout(
+                        WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.MATCH_PARENT
+                    );
+                }
+            }
+
+        val filterView = FilterView.Builder(requireContext())
+            .withTitle("Готово")
             .setToolbarVisible(true)
-            .withTitleColor(R.color.colorAccent)
-            .withDivisorColor(R.color.colorAccent)
-            .setCloseIconColor(R.color.colorAccent)
+            .withTitleColor(R.color.grey)
+            .setCloseIconColor(R.color.grey)
             .addSection(tagSection)
             .build()
-            .setOnFilterViewResultListener { data -> Log.d("TAG", data.toString()) }
-        //show()
 
+        filterView.setOnFilterCanceled { dialog.cancel() }
+        filterView.setOnFilterViewResultListener { data ->
+            val jsonObject = data.optJSONObject(0)
+            if (jsonObject == null || jsonObject.length() == 0) {
+                adapter.filter(MasterTravelStatus.UNKNOWN)
+            } else {
+                adapter.filter(MasterTravelStatus.MAJOR)
+            }
+
+        }
+        dialog.setContentView(filterView)
+
+        filters.setOnClickListener { dialog.show() }
     }
 
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {

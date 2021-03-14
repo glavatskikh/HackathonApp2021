@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.dreamteam.hackathonapp2021.R
 import com.dreamteam.hackathonapp2021.data.api.NetworkModule
 import com.dreamteam.hackathonapp2021.model.Country
+import com.dreamteam.hackathonapp2021.model.MasterTravelStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -47,6 +48,18 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
         if (!query.isNullOrEmpty()) {
             list.addAll(unfilteredList.filter {
                 it.name.contains(other = query, ignoreCase = true)
+            })
+        } else {
+            list.addAll(unfilteredList)
+        }
+        super.submitList(list)
+    }
+
+    fun filter(query: MasterTravelStatus) {
+        val list = mutableListOf<Country>()
+        if (query != MasterTravelStatus.UNKNOWN) {
+            list.addAll(unfilteredList.filter {
+                it.countryRestrictions?.travelStatus == query
             })
         } else {
             list.addAll(unfilteredList)
