@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -65,13 +64,9 @@ class CountriesListFragment : Fragment() {
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {
         viewModel.countriesOutput.observe(viewLifecycleOwner, { countriesList ->
             adapter.submitList(countriesList)
-            adapter.currentList
         })
         viewModel.progressBarVisibleLiveData.observe(viewLifecycleOwner, {
-            when (it) {
-                true -> lottie_view.isVisible
-                else -> lottie_view.isInvisible
-            }
+            lottie_view.isVisible = it
         })
     }
 

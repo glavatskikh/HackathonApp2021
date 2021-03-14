@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dreamteam.hackathonapp2021.R
@@ -41,7 +41,7 @@ class CountryDetailsFragment : Fragment() {
             viewModel.temperatureData.observe(viewLifecycleOwner, { setTemperature(it) })
             viewModel.windData.observe(viewLifecycleOwner, { setInfoByWindy(it) })
         } else {
-            cardView.isInvisible
+            cardView.isVisible = false
         }
     }
 
@@ -64,11 +64,11 @@ class CountryDetailsFragment : Fragment() {
     private fun setWeather(weather: Weather) {
         weather.apply {
             weather_status.text = description
-            when {
-                weather.main == "Clear" -> img_weather.setImageResource(R.drawable.ic_sun)
-                weather.main == "Snow" -> img_weather.setImageResource(R.drawable.ic_snowy)
-                weather.main == "Rain" -> img_weather.setImageResource(R.drawable.ic_rainy)
-                weather.main == "Clouds" -> img_weather.setImageResource(R.drawable.ic_cloudy)
+            when (weather.main) {
+                "Clear" -> img_weather.setImageResource(R.drawable.ic_sun)
+                "Snow" -> img_weather.setImageResource(R.drawable.ic_snowy)
+                "Rain" -> img_weather.setImageResource(R.drawable.ic_rainy)
+                "Clouds" -> img_weather.setImageResource(R.drawable.ic_cloudy)
                 else -> img_weather.setImageResource(R.drawable.ic_storm)
             }
         }
@@ -85,20 +85,15 @@ class CountryDetailsFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setInfoByWindy(wind: Wind) {
-        when {
-            wind.deg in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed.toInt()} м/с"
-            wind.deg in 61..120 -> wind_status.text = "Ветер В ${wind.speed.toInt()} м/с"
-            wind.deg in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed.toInt()} м/с"
-            wind.deg in 151..210 -> wind_status.text = "Ветер Ю ${wind.speed.toInt()} м/с"
-            wind.deg in 211..240 -> wind_status.text = "Ветер ЮЗ ${wind.speed.toInt()} м/с"
-            wind.deg in 241..300 -> wind_status.text = "Ветер З ${wind.speed.toInt()} м/с"
+        when (wind.deg) {
+            in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed.toInt()} м/с"
+            in 61..120 -> wind_status.text = "Ветер В ${wind.speed.toInt()} м/с"
+            in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed.toInt()} м/с"
+            in 151..210 -> wind_status.text = "Ветер Ю ${wind.speed.toInt()} м/с"
+            in 211..240 -> wind_status.text = "Ветер ЮЗ ${wind.speed.toInt()} м/с"
+            in 241..300 -> wind_status.text = "Ветер З ${wind.speed.toInt()} м/с"
             else -> wind_status.text = "Ветер С ${wind.speed.toInt()} м/с"
         }
-    }
-
-
-    interface CountryDetailsBackClickListener {
-        fun onCountryDeselected()
     }
 
     companion object {
