@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
-    private val baseUrl = "https://www.skyscanner.ru/"
-    private val basePath = "g/can-i-go-map-api/map/"
-    private val baseUrlPhoto = "https://pixabay.com/"
+    private const val baseUrl = "https://www.skyscanner.ru/"
+    private const val basePath = "g/can-i-go-map-api/map/"
+    private const val baseUrlPhoto = "https://pixabay.com/"
 
     private val json = Json {
         prettyPrint = true
