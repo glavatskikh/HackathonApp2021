@@ -19,71 +19,58 @@
             android:layout_height="wrap_content"
             android:background="@drawable/colllapsing_toolbar_background"
             android:fitsSystemWindows="true"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="enterAlways"
             app:toolbarId="@+id/toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="176dp"
-                    android:layout_height="196dp"
-                    android:layout_gravity="start"
-                    android:contentDescription="@string/image_view"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/toolbar_hand"
-                    app:layout_collapseMode="parallax"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll" />
-
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="30dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll"
-                    app:menu="@menu/menu" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="120dp"
-                    android:fontFamily="@font/gt_walsheim_pro_regular"
-                    android:text="Welcome,\nCharlie"
-                    android:textColor="#545454"
-                    android:textSize="50sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Welcome,\nCharlie" />
 
                 <SearchView
                     android:id="@+id/search_view"
-                    android:layout_width="0dp"
+                    android:layout_width="266dp"
                     android:layout_height="40dp"
                     android:layout_gravity="bottom"
-                    android:layout_margin="30dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
-                    android:layout_marginEnd="333dp"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@drawable/search_view_background"
                     android:focusable="false"
                     android:iconifiedByDefault="false"
                     android:queryHint="Поиск"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/filters"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/filters"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_filter"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_view"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/search_view"
+                    app:layout_constraintTop_toTopOf="@+id/search_view" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:src="@drawable/ic_toolbar_notification"
+                    app:layout_constraintBottom_toBottomOf="@+id/filters"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/filters"
+                    app:layout_constraintTop_toTopOf="@+id/filters" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>

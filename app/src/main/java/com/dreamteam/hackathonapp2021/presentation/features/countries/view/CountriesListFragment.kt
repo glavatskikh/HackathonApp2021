@@ -2,6 +2,7 @@ package com.dreamteam.hackathonapp2021.presentation.features.countries.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,10 @@ import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
+import com.javier.filterview.FilterView
+import com.javier.filterview.tag.TagGravity
+import com.javier.filterview.tag.TagMode
+import com.javier.filterview.tag.TagSection
 import kotlinx.android.synthetic.main.fragment_countries_list.*
 
 class CountriesListFragment : Fragment() {
@@ -58,6 +63,36 @@ class CountriesListFragment : Fragment() {
                 return true
             }
         })
+
+        val data = arrayOf(
+            "нет карантина по прибытии",
+            "нет карантина по возвращении",
+            "въезд разрешен",
+            "въезд частично разрешен",
+            "въезд закрыт",
+        )
+
+        val tagSection = TagSection.Builder("Tags", 4)
+            .setSectionNameColor(R.color.colorAccent)
+            .setSelectedColor(R.color.colorAccent)
+            .setDeselectedColor(R.color.colorPrimary)
+            .setSelectedFontColor(R.color.colorPrimaryDark)
+            .setDeselectedFontColor(R.color.colorAccent)
+            .setGravity(TagGravity.CENTER)
+            .setMode(TagMode.MULTI)
+            .setLabels(data)
+            .build()
+        FilterView.Builder(requireContext())
+            .withTitle("Фильтры поиска")
+            .setToolbarVisible(true)
+            .withTitleColor(R.color.colorAccent)
+            .withDivisorColor(R.color.colorAccent)
+            .setCloseIconColor(R.color.colorAccent)
+            .addSection(tagSection)
+            .build()
+            .setOnFilterViewResultListener { data -> Log.d("TAG", data.toString()) }
+        //show()
+
     }
 
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {
