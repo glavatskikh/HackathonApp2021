@@ -77,12 +77,16 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
             scope.launch {
                 var imageUrl = item.imageUrl
                 if (imageUrl.isNullOrEmpty()) {
-                    val loadUrlPhoto =
-                        NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
-                    if (loadUrlPhoto.hits.isNotEmpty()) {
-                        val photo = loadUrlPhoto.hits.first()
-                        item.imageUrl = photo.webformatURL
-                        imageUrl = photo.webformatURL
+                    try {
+                        val loadUrlPhoto =
+                            NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
+                        if (loadUrlPhoto.hits.isNotEmpty()) {
+                            val photo = loadUrlPhoto.hits.first()
+                            item.imageUrl = photo.webformatURL
+                            imageUrl = photo.webformatURL
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
                 }
                 if (imageUrl.isNullOrEmpty()) {
