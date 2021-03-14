@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,6 +16,7 @@ import com.dreamteam.hackathonapp2021.di.Dependencies
 import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
+import kotlinx.android.synthetic.main.fragment_countries_list.*
 
 class CountriesListFragment : Fragment() {
 
@@ -54,6 +57,12 @@ class CountriesListFragment : Fragment() {
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {
         viewModel.countriesOutput.observe(viewLifecycleOwner, { countriesList ->
             adapter.submitList(countriesList)
+        })
+        viewModel.progressBarVisibleLiveData.observe(viewLifecycleOwner, {
+            when (it) {
+                true -> lottie_view.isVisible
+                else -> lottie_view.isInvisible
+            }
         })
     }
 
