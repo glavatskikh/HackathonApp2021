@@ -10,7 +10,8 @@ data class Country(
         val name: String,
         val code: String,
         val countryRestrictions: CountryRestrictions? = null,
-        val coordinate: CoordinatesCountry? = null
+        val coordinate: CoordinatesCountry? = null,
+        var imageUrl: String? = null
 ) : Parcelable {
     companion object {
         fun map(properties: Properties): Country {

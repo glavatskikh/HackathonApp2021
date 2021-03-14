@@ -16,6 +16,9 @@ import com.dreamteam.hackathonapp2021.model.Country
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountriesListViewModelImpl
 import com.dreamteam.hackathonapp2021.presentation.features.countries.viewmodel.CountryListViewModelFactory
 import kotlinx.android.synthetic.main.fragment_countries_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CountriesListFragment : Fragment() {
 
@@ -68,6 +71,14 @@ class CountriesListFragment : Fragment() {
         viewModel.progressBarVisibleLiveData.observe(viewLifecycleOwner, {
             lottie_view.isVisible = it
         })
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        CoroutineScope(Dispatchers.IO).launch {
+//            Dependencies.localDataSource.putCountries(adapter.unfilteredList)
+        }
     }
 
     override fun onDetach() {
