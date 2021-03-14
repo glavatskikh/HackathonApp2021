@@ -10,12 +10,12 @@ data class Country(
         val name: String,
         val code: String,
         val countryRestrictions: CountryRestrictions? = null,
-        val coordinate: CoordinatesCountry
+        val coordinate: CoordinatesCountry? = null
 ) : Parcelable {
     companion object {
         fun map(properties: Properties): Country {
             val countryRestrictions = CountryRestrictions.map(properties.restrictions)
-            val coordinates = CoordinatesCountry.map(properties.centroid)
+            val coordinates = properties.centroid?.let { CoordinatesCountry.map(it) }
             return Country(
                     properties.countryId.toLong(),
                     properties.countryName,

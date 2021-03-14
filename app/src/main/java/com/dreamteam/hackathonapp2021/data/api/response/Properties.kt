@@ -15,5 +15,5 @@ data class Properties(
     @SerialName("restrictions")
     val restrictions: Restrictions? = null,
     @SerialName("centroid")
-    val centroid: Centroid
+    val centroid: Centroid?
 )

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.dreamteam.hackathonapp2021.R
@@ -44,10 +45,15 @@ class CountryDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val country: Country = arguments?.getParcelable(PARAM_COUNTRY) ?: return
         updateCountryDetailsInfo(country)
-        viewModel.getWeather(country.coordinate.lat, country.coordinate.lng)
-        viewModel.weatherData.observe(viewLifecycleOwner, {setWeather(it)})
-        viewModel.temperatureData.observe(viewLifecycleOwner, {setTemperature(it)})
-        viewModel.windData.observe(viewLifecycleOwner, {setInfoByWindy(it)})
+        /*country.coordinate?.let { viewModel.getWeather(it.lat, country.coordinate.lng) }*/
+        if(country.coordinate != null) {
+            viewModel.getWeather(country.coordinate.lat, country.coordinate.lng)
+            viewModel.weatherData.observe(viewLifecycleOwner, {setWeather(it)})
+            viewModel.temperatureData.observe(viewLifecycleOwner, {setTemperature(it)})
+            viewModel.windData.observe(viewLifecycleOwner, {setInfoByWindy(it)})
+        } else {
+            cardView.isInvisible
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -89,13 +95,13 @@ class CountryDetailsFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     private fun setInfoByWindy(wind: Wind) {
         when{
-            wind.deg in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed} м/с"
-            wind.deg in 61..120 -> wind_status.text = "Ветер В ${wind.speed} м/с"
-            wind.deg in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed} м/с"
-            wind.deg in 151..210 -> wind_status.text = "Ветер Ю ${wind.speed} м/с"
-            wind.deg in 211..240 -> wind_status.text = "Ветер ЮЗ ${wind.speed} м/с"
-            wind.deg in 241..300 -> wind_status.text = "Ветер З ${wind.speed} м/с"
-            else -> wind_status.text = "Ветер С ${wind.speed} м/с"
+            wind.deg in 31..60 -> wind_status.text = "Ветер СВ ${wind.speed.toInt()} м/с"
+            wind.deg in 61..120 -> wind_status.text = "Ветер В ${wind.speed.toInt()} м/с"
+            wind.deg in 121..150 -> wind_status.text = "Ветер ЮВ ${wind.speed.toInt()} м/с"
+            wind.deg in 151..210 -> wind_status.text = "Ветер Ю ${wind.speed.toInt()} м/с"
+            wind.deg in 211..240 -> wind_status.text = "Ветер ЮЗ ${wind.speed.toInt()} м/с"
+            wind.deg in 241..300 -> wind_status.text = "Ветер З ${wind.speed.toInt()} м/с"
+            else -> wind_status.text = "Ветер С ${wind.speed.toInt()} м/с"
         }
     }
 

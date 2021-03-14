@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit
 
 @ExperimentalSerializationApi
 object WeatherNetworkModule {
-    private val baseUrl = "http://api.openweathermap.org/data/2.5/"
+    private val baseUrl = "https://api.openweathermap.org/data/2.5/"
 
     private val json = Json {
         prettyPrint = true
