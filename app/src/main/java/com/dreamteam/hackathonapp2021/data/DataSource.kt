@@ -7,6 +7,7 @@ interface DataSource {
     suspend fun hasData(): Boolean
 
     suspend fun getCountries(): DataSourceResult
+
 }
 
 sealed class DataSourceResult {

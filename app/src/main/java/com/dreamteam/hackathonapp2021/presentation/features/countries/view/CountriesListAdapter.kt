@@ -75,7 +75,6 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
                         crossfade(true)
                     }
                 }
-
             }
             itemView.setOnClickListener {
                 onClickCard(item)
