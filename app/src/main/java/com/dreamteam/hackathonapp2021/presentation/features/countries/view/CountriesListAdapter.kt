@@ -62,20 +62,26 @@ class CountriesListAdapter(private val onClickCard: (country: Country) -> Unit) 
             countryName.text = item.name
             // TODO: 14.03.2021 change scope logic
             scope.launch {
-                val loadUrlPhoto =
-                    NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
-                if (loadUrlPhoto.hits.isNotEmpty()) {
-                    val photo = loadUrlPhoto.hits.first()
-                    Glide.with(countryImage.context)
-                        .load(photo.webformatURL)
-                        .override(176, 112)
-                        .into(countryImage)
-                } else {
+                var imageUrl = item.imageUrl
+                if (imageUrl.isNullOrEmpty()) {
+                    val loadUrlPhoto =
+                        NetworkModule.apiPhoto.loadCountryPhoto(query = "город+" + item.name)
+                    if (loadUrlPhoto.hits.isNotEmpty()) {
+                        val photo = loadUrlPhoto.hits.first()
+                        item.imageUrl = photo.webformatURL
+                        imageUrl = photo.webformatURL
+                    }
+                }
+                if (imageUrl.isNullOrEmpty()) {
                     countryImage.load(R.drawable.temp) {
                         crossfade(true)
                     }
+                } else {
+                    Glide.with(countryImage.context)
+                        .load(imageUrl)
+                        .override(176, 112)
+                        .into(countryImage)
                 }
-
             }
             itemView.setOnClickListener {
                 onClickCard(item)

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,9 @@ import com.javier.filterview.tag.TagGravity
 import com.javier.filterview.tag.TagMode
 import com.javier.filterview.tag.TagSection
 import kotlinx.android.synthetic.main.fragment_countries_list.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CountriesListFragment : Fragment() {
 
@@ -98,8 +102,18 @@ class CountriesListFragment : Fragment() {
     private fun loadDataToAdapter(adapter: CountriesListAdapter) {
         viewModel.countriesOutput.observe(viewLifecycleOwner, { countriesList ->
             adapter.submitList(countriesList)
-            adapter.currentList
         })
+        viewModel.progressBarVisibleLiveData.observe(viewLifecycleOwner, {
+            lottie_view.isVisible = it
+        })
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        CoroutineScope(Dispatchers.IO).launch {
+//            Dependencies.localDataSource.putCountries(adapter.unfilteredList)
+        }
     }
 
     override fun onDetach() {

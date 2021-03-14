@@ -2,11 +2,17 @@ package com.dreamteam.hackathonapp2021.presentation.features.countrydetails.view
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dreamteam.hackathonapp2021.repository.CountryRepository
+import com.dreamteam.hackathonapp2021.data.api.weather.WeatherNetworkModule
+import kotlinx.serialization.ExperimentalSerializationApi
 
-class CountryDetailsViewModelFactory(private val repository: CountryRepository) :
-    ViewModelProvider.Factory {
+class CountryDetailsViewModelFactory : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        CountryDetailsViewModelImpl(repository) as T
+    @ExperimentalSerializationApi
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T = when (modelClass) {
+        CountryDetailsViewModel::class.java -> CountryDetailsViewModel(
+            weatherApi =WeatherNetworkModule.weatherApi
+        )
+        else -> throw IllegalArgumentException("$modelClass is not registered ViewModel")
+    } as T
 }
